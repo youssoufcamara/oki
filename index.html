@@ -42,6 +42,11 @@ body {
 
 }
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"> </script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script>
@@ -69,7 +74,7 @@ function renderChart(selectedCriteria, selectedData) {
       height = 400 - margin.top - margin.bottom;
 
   var x = d3.scale.ordinal()
-      .rangeRoundBands([0, width], .1); 
+      .rangeRoundBands([0, width], .1);
 
   /**
    * Scale of the two axes.
@@ -96,7 +101,7 @@ function renderChart(selectedCriteria, selectedData) {
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     x.domain(selectedData.map(function(d) { return fromValue(selectedCriteria, d.title); }));
     y0.domain([0, d3.max(selectedData, function(d) { return d.nb; })]);
-    
+
     svg.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
@@ -114,7 +119,7 @@ function renderChart(selectedCriteria, selectedData) {
       .style("text-anchor", "end")
       .style("text-anchor", "end")
       .text("Accidents");
-    
+
     svg.append("g")
       .attr("class", "y axis axisRight")
       .attr("transform", "translate(" + (width) + ",0)")
@@ -133,14 +138,14 @@ function renderChart(selectedCriteria, selectedData) {
         .attr("x", function(d) { return x(fromValue(selectedCriteria, d.title)); })
         .attr("width", x.rangeBand()/2)
         .attr("y", function(d) { return y0(d.nb); })
-      .attr("height", function(d,i,j) { return height - y0(d.nb); }); 
+      .attr("height", function(d,i,j) { return height - y0(d.nb); });
 
     bars.append("rect")
         .attr("class", "bar2")
         .attr("x", function(d) { return x(fromValue(selectedCriteria, d.title)) + x.rangeBand()/2; })
         .attr("width", x.rangeBand() / 2)
         .attr("y", function(d) { return y1(d.avg); })
-      .attr("height", function(d,i,j) { return height - y1(d.avg); }); 
+      .attr("height", function(d,i,j) { return height - y1(d.avg); });
 
 
     function wrap(text, width) {
@@ -226,15 +231,15 @@ function fromValue(criteria, value) {
     catr: {
       "0": "Non renseigné",
       "1": "Autoroute",
-      "2": "Route Nationale", 
-      "3": "Route Départementale", 
-      "4": "Voie Communale", 
-      "5": "Hors réseau public", 
-      "6": "Parc de stationnement ouvert à la circulation publique", 
+      "2": "Route Nationale",
+      "3": "Route Départementale",
+      "4": "Voie Communale",
+      "5": "Hors réseau public",
+      "6": "Parc de stationnement ouvert à la circulation publique",
       "9": "autre"
     }
   };
-    
+
   return mapping[criteria][value];
 }
 </script>
@@ -243,7 +248,7 @@ function fromValue(criteria, value) {
   <h1>Impact des conditions des accidents corporels de la circulation sur la fréquence et la gravité</h1>
   <p>Conditions de l'accident :
     <select id="criteria">
-      <option value="lum" selected>Luminosité</option>
+      <option value="lum" selected>youssouf</option>
       <option value="agg">Agglomération</option>
       <option value="int">Type d'intersection</option>
       <option value="atm">Conditions atmosphériques</option>
@@ -254,10 +259,6 @@ function fromValue(criteria, value) {
   <div id="chart"></div>
 
   <h2>Méthode</h2>
-  <p>Cette visualisation est basée sur un jeu de donné ouvert fourni par le Ministère de l'Intérieur français comptabilisant les accidents avec dommages corporels de 2006 à 2011. Le jeu de données est accessible sur <a href="http://www.data.gouv.fr/fr/dataset/base-de-donnees-accidents-corporels-de-la-circulation-sur-6-annees">data.gouv.fr.</a></p>
-  <p>La colonne "Accidents" donne le nombre d'accidents sur le territoire français. La colonne "Gravité" donne la moyenne de la gravité des accidents recensés, selon l'indice de gravité de l'accident utilisé dans le calcul annuel du coût pour la Nation de l'insécurité routière. En 2011, une personne décédée comptait pour 100 points, un hospitalisé pour 10,8 points et un blessé léger à 0,44 points.</p>
-
-  <p>Réalisé par Fabrice Sznajderman et Antoine Roux dans le cadre d'un Open Data Camp organisé par Etalab.</p>
 </body>
 
 </html>
